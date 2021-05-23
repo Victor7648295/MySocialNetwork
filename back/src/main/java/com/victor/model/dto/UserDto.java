@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Accessors(fluent = true)
 public class UserDto {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -21,6 +23,12 @@ public class UserServiceImpl implements UserService {
         log.debug("In UserService - request find User with id {} ", id);
         return userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("In UserService - not found user with id {} " + id));
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        log.debug("In UserService - request find all Users");
+       return userRepository.findAll();
     }
 
     @Override

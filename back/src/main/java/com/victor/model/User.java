@@ -1,5 +1,6 @@
 package com.victor.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 @Data
 @Accessors(fluent = true)
 @Table(name = "user")
+@AllArgsConstructor
 public class User {
 
     @Id
