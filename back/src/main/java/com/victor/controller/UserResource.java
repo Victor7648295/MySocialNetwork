@@ -1,8 +1,7 @@
 package com.victor.controller;
 
 import com.victor.config.ApiVersion;
-import com.victor.converter.UserDtoUserConverter;
-import com.victor.converter.UserToUserDtoConverter;
+import com.victor.converter.ConverterFacade;
 import com.victor.exception.ResourceNotFoundException;
 import com.victor.model.User;
 import com.victor.model.dto.UserDto;
@@ -31,24 +30,23 @@ public class UserResource {
     public static final String BASE_URL = "/user" + ApiVersion.Version_1_0;
 
     private final UserServiceImpl userService;
-    private final UserToUserDtoConverter converterDto;
-    private final UserDtoUserConverter converter;
+    private final ConverterFacade converter;
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable Long id) {
-        log.info("In User Resource - request to get the user by id: " + id);
+//        log.info("In User Resource - request to get the user by id: " + id);
         if (id == null) {
             throw new ResourceNotFoundException("In User Resource - there is a request to search for a User with id null");
         }
         User user = userService.getUserById(id);
-        return converterDto.convert(user);
+        return converter.convert(user, UserDto.class);
     }
 
     @GetMapping("/all")
     public List<UserDto> findAllUsersDto() {
         log.info("In User Resource - request to find all users");
         List<User> listUsers = userService.findAllUsers();
-        return null;
+        return converter.convertList(listUsers, UserDto.class);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -67,7 +65,7 @@ public class UserResource {
         if (userDto == null) {
             throw new ResourceNotFoundException("In User Resource - there is a request to update User null");
         }
-        User user = converter.convert(userDto);
+        User user = converter.convert(userDto, User.class);
         userService.updateUser(user);
     }
 
@@ -77,7 +75,7 @@ public class UserResource {
         if (userDto == null) {
             throw new ResourceNotFoundException("In User Resource - there is a request to update User null");
         }
-        User user = converter.convert(userDto);
+        User user = converter.convert(userDto, User.class);
         userService.createUser(user);
     }
 }

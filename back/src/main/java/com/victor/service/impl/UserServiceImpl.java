@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
         log.debug("In UserService - request find all Users");
-       return userRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
@@ -51,11 +51,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(User user) {
         User userInBase = userRepository.findById(user.id()).orElseThrow(
-                ()-> new ResourceNotFoundException("In UserService - fail update, not found user with id {} " + user.id()));
-        if(user.id().equals(userInBase.id())) {
+                () -> new ResourceNotFoundException("In UserService - fail update, not found user with id {} " + user.id()));
+        if (user.id().equals(userInBase.id())) {
             userRepository.saveAndFlush(user);
         }
         log.debug("In UserService - successfully update user  with id {}", user.id());
     }
-
 }
