@@ -16,15 +16,15 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
 
     @Override
     public UserDto convert(User source) {
-        return new UserDto(source.id(),
-                           source.firstName(),
-                           source.lastName(),
-                           source.login(),
-                           source.password(),
-                           source.email(),
-                           source.sex(),
-                           source.urlPhoto(),
-                           source.dateOfBirth(),
-                           source.role());
+        return new UserDto(source.getId(),
+                           source.getFirstName(),
+                           source.getLastName(),
+                           source.getLogin(),
+                           source.getPassword(),
+                           source.getEmail(),
+                           source.getSex(),
+                           source.getUrlPhoto(),
+                           source.getDateOfBirth(),
+                           source.getRole());
     }
 }

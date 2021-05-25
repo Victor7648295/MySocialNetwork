@@ -6,8 +6,6 @@ import com.victor.exception.ResourceNotFoundException;
 import com.victor.model.User;
 import com.victor.model.dto.UserDto;
 import com.victor.service.impl.UserServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = UserResource.BASE_URL)
-@AllArgsConstructor
-@Slf4j
+
 @Validated
 public class UserResource {
 
@@ -31,6 +28,11 @@ public class UserResource {
 
     private final UserServiceImpl userService;
     private final ConverterFacade converter;
+
+    public UserResource(UserServiceImpl userService, ConverterFacade converter) {
+        this.userService = userService;
+        this.converter = converter;
+    }
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable Long id) {
@@ -44,14 +46,14 @@ public class UserResource {
 
     @GetMapping("/all")
     public List<UserDto> findAllUsersDto() {
-        log.info("In User Resource - request to find all users");
+//        log.info("In User Resource - request to find all users");
         List<User> listUsers = userService.findAllUsers();
         return converter.convertList(listUsers, UserDto.class);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable Long id) {
-        log.info("In User Resource - request to delete the user by id: " + id);
+//        log.info("In User Resource - request to delete the user by id: " + id);
         if (id != null) {
             userService.deleteUserById(id);
         } else {
@@ -61,7 +63,7 @@ public class UserResource {
 
     @PutMapping("/update")
     public void updateUser(@Valid UserDto userDto) {
-        log.info("In User Resource - request to update the user: " + userDto);
+//        log.info("In User Resource - request to update the user: " + userDto);
         if (userDto == null) {
             throw new ResourceNotFoundException("In User Resource - there is a request to update User null");
         }
@@ -71,7 +73,7 @@ public class UserResource {
 
     @PostMapping("/create")
     public void addUser(@Valid UserDto userDto) {
-        log.info("In User Resource - request to create the user: " + userDto);
+//        log.info("In User Resource - request to create the user: " + userDto);
         if (userDto == null) {
             throw new ResourceNotFoundException("In User Resource - there is a request to update User null");
         }

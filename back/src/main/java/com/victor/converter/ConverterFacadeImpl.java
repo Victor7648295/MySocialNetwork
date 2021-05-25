@@ -1,7 +1,6 @@
 package com.victor.converter;
 
 import com.victor.exception.TypeConversionException;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -11,12 +10,16 @@ import java.util.Map;
 import java.util.Objects;
 
 @Component
-@AllArgsConstructor
 public class ConverterFacadeImpl implements ConverterFacade {
+
 
     private final List<Converter<?, ?>> converters;
 
     private final Map<ConversionDescriptor, Converter<?, ?>> converterRegistry = new HashMap<>();
+
+    public ConverterFacadeImpl(List<Converter<?, ?>> converters) {
+        this.converters = converters;
+    }
 
     @PostConstruct
     protected void populateConverterRegistry() {
