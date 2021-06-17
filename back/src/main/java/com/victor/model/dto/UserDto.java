@@ -2,15 +2,16 @@ package com.victor.model.dto;
 
 import com.victor.model.Role;
 import com.victor.model.Sex;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Component
 public class UserDto {
@@ -22,9 +23,11 @@ public class UserDto {
     private String login;
     private String password;
     private String email;
+    @Enumerated(value = EnumType.STRING)
     private Sex sex;
     private URL urlPhoto;
     private LocalDate dateOfBirth;
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     public UserDto() {
@@ -121,5 +124,27 @@ public class UserDto {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return id.equals(userDto.id) &&
+                firstName.equals(userDto.firstName) &&
+                lastName.equals(userDto.lastName) &&
+                login.equals(userDto.login) &&
+                password.equals(userDto.password) &&
+                email.equals(userDto.email) &&
+                sex == userDto.sex &&
+                urlPhoto.equals(userDto.urlPhoto) &&
+                dateOfBirth.equals(userDto.dateOfBirth) &&
+                role == userDto.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, login, password, email, sex, urlPhoto, dateOfBirth, role);
     }
 }
